@@ -20,7 +20,11 @@ function AddTask({ addTask }) {
 
   return (
     <form className="add-task" onSubmit={handleSubmit}>
-      <input value={value} onChange={(e) => setValue(e.target.value)}></input>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      ></input>
     </form>
   );
 }
