@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 
-function Task({ task, id, completeTask }) {
+function Task({ task, id, completeTask, deleteTask }) {
   return (
     <div
       style={{ textDecoration: task.completed ? 'line-through' : '' }}
@@ -10,6 +10,7 @@ function Task({ task, id, completeTask }) {
       {task.text}
       <div>
         <button onClick={() => completeTask(id)}>Complete</button>
+        <button onClick={() => deleteTask(id)}>X</button>
       </div>
     </div>
   );
@@ -57,6 +58,9 @@ function App() {
     setTasks([...newTasks]);
   };
 
+  const deleteTask = (id) =>
+    setTasks([...tasks].filter((task) => task.id !== id));
+
   return (
     <div className="App">
       <div className="task-list">
@@ -66,6 +70,7 @@ function App() {
             task={task}
             id={task.id}
             completeTask={completeTask}
+            deleteTask={deleteTask}
           ></Task>
         ))}
         <AddTask addTask={addTask}></AddTask>
