@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
 import './App.css';
 
-function Task({ task, id }) {
-  return <div className="task">{task.text}</div>;
+function Task({ task, id, completeTask }) {
+  return (
+    <div
+      style={{ textDecoration: task.completed ? 'line-through' : '' }}
+      className="task"
+    >
+      {task.text}
+      <div>
+        <button onClick={() => completeTask(id)}>Complete</button>
+      </div>
+    </div>
+  );
 }
 
 function AddTask({ addTask }) {
@@ -40,11 +50,23 @@ function App() {
     setTasks([...tasks, { text, completed: false, id: tasks.length + 1 }]);
   };
 
+  const completeTask = (id) => {
+    const newTasks = [...tasks];
+    const index = newTasks.findIndex((task) => task.id === id);
+    newTasks[index].completed = !newTasks[index].completed;
+    setTasks([...newTasks]);
+  };
+
   return (
     <div className="App">
       <div className="task-list">
         {tasks.map((task) => (
-          <Task key={task.id} task={task} id={task.id}></Task>
+          <Task
+            key={task.id}
+            task={task}
+            id={task.id}
+            completeTask={completeTask}
+          ></Task>
         ))}
         <AddTask addTask={addTask}></AddTask>
       </div>
